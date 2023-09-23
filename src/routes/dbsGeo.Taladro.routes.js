@@ -16,10 +16,10 @@ import {
 
 const router = Router();
 
-router.get('/', (req, res) => res.json({ message: 'Taladros' }));
-router.get('/:Id', validarSchema(getTaladroSchema, 'params'), (req, res) => res.json({ message: 'Taladro por ID'}));
-router.post('/', validarSchema(createTaladroSchema, 'body'), (req, res) => res.json({ message: 'Crear Taladro', data: req.body  }));
-router.put('/:Id', validarSchema(getTaladroSchema, 'params'), validarSchema(updateTaladroSchema, 'body'), (req, res) => res.json({ message: 'Actualizar Taladro por su ID' }));
-router.delete('/:Id', validarSchema(getTaladroSchema, 'params'), (req, res) => res.json({ message: 'Eliminar Taladro por su ID' }));
+router.get('/', getTaladros);
+router.get('/:TaladroId', validarSchema(getTaladroSchema, 'params'), getTaladro);
+router.post('/', validarSchema(createTaladroSchema, 'body'), createTaladro);
+router.put('/:TaladroId', validarSchema(getTaladroSchema, 'params'), validarSchema(updateTaladroSchema, 'body'), updateTaladro);
+router.delete('/:TaladroId', validarSchema(getTaladroSchema, 'params'), deleteTaladro);
 
 export default router;

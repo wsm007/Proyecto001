@@ -14,18 +14,18 @@ export function errorHandler (err, req, res, next) {
   });
 };
 
-// Proprociona un formato para reportar los errores de Boom
-export function boomErrorHandler (err, req, res, next) {
-  if (err.isBoom){
-    const{ output } = err;
-    res.status(output.statusCode).json(output.payload);
-  } else {
-    next(err);
-  }
-}
+// No funcionó
+// // Proprociona un formato para reportar los errores de Boom
+// export function boomErrorHandler (err, req, res, next) {
+//   console.info('3. errorBoomHandler');
+//   if (err.isBoom){
 
-
-// module.exports = {logErrors, errorHandler, boomErrorHandler};
+//     const{ output } = err;
+//     res.status(output.statusCode).json(output.payload);
+//   } else {
+//     next(err);
+//   }
+// }
 
 
 

@@ -4,8 +4,7 @@ import cors from "cors";
 import routerApi from "./routes/index.js";
 import {
   logErrors,
-  errorHandler,
-  boomErrorHandler
+  errorHandler
 } from "./middlewares/error.handler.js";
 
 // Inicializar express
@@ -38,7 +37,6 @@ app.use(express.json());
 // Rutas
 routerApi(app);
 app.use(logErrors);
-app.use(boomErrorHandler);
 app.use(errorHandler);
 
 

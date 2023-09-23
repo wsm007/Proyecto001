@@ -1,30 +1,23 @@
 import Joi from 'joi';
+import { messages } from './mensajesPersonalizadosJoi.js';
 
-const Id = Joi.number().integer().positive();
-const Codigo = Joi.string().max(30);
-const Descripcion = Joi.string().min(6).max(400);
-const RegistroActivo = Joi.number().integer().positive() ;
-const FechaActualizacion = Joi.date();
-const UsuarioActualizacion = Joi.string().max(50);
-
-
+const TaladroId = Joi.number().integer().positive().required().messages(messages);
+const Codigo = Joi.string().max(30).required().messages(messages);
+const Descripcion = Joi.string().min(6).max(400).required().messages(messages);
+const RegistroActivo = Joi.number().integer().positive().required().messages(messages);
+const FechaActualizacion = Joi.date().required().messages(messages);
+const UsuarioActualizacion = Joi.string().max(50).required().messages(messages);
 
 export const getTaladroSchema = Joi.object({
-  Id: Id.required({message: "El campo {field} es obligatorio"}),
+  TaladroId: TaladroId.required()
 });
 
-// getTaladroSchema.messages = {
-//   required: "El campo {field} es obligatorio",
-//   integer: "El campo {field} debe ser un número entero",
-//   positive: "El campo {field} debe ser un valor positivo",
-// };
-
 export const createTaladroSchema = Joi.object({
-  Codigo: Codigo.required(),
-  Descripcion: Descripcion.optional(),
-  RegistroActivo: RegistroActivo.required(),
-  FechaActualizacion: FechaActualizacion.required(),
-  UsuarioActualizacion: UsuarioActualizacion.required(),
+  Codigo: Codigo,
+  Descripcion: Descripcion,
+  RegistroActivo: RegistroActivo,
+  FechaActualizacion: FechaActualizacion,
+  UsuarioActualizacion: UsuarioActualizacion,
 });
 
 export const updateTaladroSchema = Joi.object({

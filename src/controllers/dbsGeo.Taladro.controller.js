@@ -1,9 +1,6 @@
-import sql from 'mssql';
-import { getConnection } from '../db.js';
-import boom from '@hapi/boom';
+import { sql, getConnection } from '../db.js';
 
-
-export const getTaladros = async (req, res, next) => {
+export const getTaladros = async (req, res) => {
     // Conexion a la base de datos
     const pool = await getConnection()
 
@@ -12,6 +9,7 @@ export const getTaladros = async (req, res, next) => {
         .execute('dbsGeo.usp_Taladro_Read')
 
     console.log(result.rowsAffected[0])
+    console.log(result)
 
     res.status(200).json({
       filas: result.rowsAffected[0] ,
@@ -29,22 +27,20 @@ export const getTaladro = async (req, res) => {
 
     // Ejecutar el procedimiento almacenado
     const result = await pool.request()
-        .input('TaladroId', sql.Int, req.params.id)
+        .input('TaladroId', sql.Int, req.params.TaladroId)
         .execute('dbsGeo.usp_Taladro_ReadById')
 
     console.log(result)
 
     // Verificar si el Taladro existe
     if (result.rowsAffected[0] == 0) {
-        // res.status(404).json({
-        //     message: "Taladro no encontrada"
-        // })
-        boom.notFound('Taladro no encontrado');
-        // throw boom.notFound('Taladro no encontrado');
+      res.status(404).json({
+          message: "Taladro no encontrada"
+      })
     } else {
-        res.status(200).json({
-          filas: result.rowsAffected[0]
-        })
+      res.status(200).json({
+        filas: result.rowsAffected[0]
+      })
     }
 
     // Cerrar la conexión a la base de datos
@@ -77,14 +73,11 @@ export const createTaladro = async (req, res, next) => {
 
     } catch (error) {
         if (error.number == 2601) {
-            // return res.status(409).json({
-            //     message: "El Taladro ya existe"
-            // })
-            boom.conflict('El Taladro ya existe');
-            // throw boom.conflict('El Taladro ya existe');
+            return res.status(409).json({
+                message: "El Taladro ya existe"
+            })
         }
         next(error);
-        //return res.send('Problemas con la BD al crear la Taladro');
     }
 
 }
@@ -95,10 +88,10 @@ export const updateTaladro = async(req, res) => {
 
     // Conexion a la base de datos
     const pool = await getConnection()
-
+  console.log(req.params.TaladroId)
     // Ejecutar el procedimiento almacenado
     const result = await pool.request()
-        .input('TaladroId', sql.Int, req.params.id)
+        .input('TaladroId', sql.Int, req.params.TaladroId)
         .input('Codigo', sql.VarChar(30), Codigo)
         .input('Descripcion', sql.VarChar(400), Descripcion)
         .input('RegistroActivo', sql.Int, RegistroActivo)
@@ -110,15 +103,13 @@ export const updateTaladro = async(req, res) => {
 
     // Verificar si la Taladro existe
     if (result.rowsAffected[0] == 0) {
-        // res.status(404).json({
-        //     message: "Taladro no encontrado"
-        // })
-        boom.notFound('Taladro no encontrado');
-        // throw boom.notFound('Taladro no encontrado');
+      res.status(404).json({
+          message: "Taladro no encontrado"
+      })
     } else {
-        res.status(200).json({
-            message: "Taladro actualizada exitosamente"
-        })
+      res.status(200).json({
+          message: "Taladro actualizada exitosamente"
+      })
     }-
 
     // Cerrar la conexión a la base de datos
@@ -132,23 +123,23 @@ export const deleteTaladro = async (req, res) => {
 
     // Ejecutar el procedimiento almacenado
     const result = await pool.request()
-        .input('TaladroId', sql.Int, req.params.id)
+        .input('TaladroId', sql.Int, req.params.TaladroId)
         .execute('dbsGeo.usp_Taladro_Delete')
 
-    console.log(result.rowsAffected[0])
+    console.log(result)
+
 
     // Verificar si el Taladro existe
     if (result.rowsAffected[0] == 0) {
-        // res.status(404).json({
-        //     message: "Taladro no encontrado"
-        // })
-        boom.notFound('Taladro no encontrado');
-        // throw boom.notFound('Taladro no encontrado');
+      res.status(404).json({
+          message: "Taladro no encontrado"
+      })
     } else {
-        res.status(204).json({
-          filas: result.rowsAffected[0] ,
-          message: "Taladro eliminado exitosamente"
-        })
+      console.log('resultado: ' + result.rowsAffected[0])
+      res.status(200).json({
+        filas: result.rowsAffected[0] ,
+        message: "Taladro eliminado exitosamente"
+      })
     }
 
     // Cerrar la conexión a la base de datos

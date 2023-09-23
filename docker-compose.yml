@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+# Este servicio es para tener una base de datos MSSQL
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: SQL2022
+    environment:
+      - MSSQL_SA_PASSWORD=Compaqnx6310
+      - ACCEPT_EULA=Y
+    ports:
+      - 14033:1433
+    volumes:
+      - c:\SQL\data:/var/opt/mssql/data
+      - c:\SQL\log:/var/opt/mssql/log
+      - c:\SQL\secrets:/var/opt/mssql/secrets
