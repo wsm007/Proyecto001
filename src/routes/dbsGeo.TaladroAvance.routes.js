@@ -1,11 +1,26 @@
-import {Router} from 'express';
+import Router from 'express-promise-router' // Evita que se tenga que capturar el error con try catch
+import {
+  getTaladroAvances,
+  getTaladroAvance,
+  createTaladroAvance,
+  updateTaladroAvance,
+  deleteTaladroAvance
+} from '../controllers/dbsGeo.TaladroAvance.controller.js';
+import { validarSchema } from '../middlewares/validarSchema.handler.js';
+import {
+  getTaladroAvanceSchema,
+  createTaladroAvanceSchema,
+  updateTaladroAvanceSchema
+} from '../schemas/dbsGeo.TaladroAvance.schema.js';
+
 
 const router = Router();
 
-router.get('/', (req, res) => res.json({ message: 'Avance de Taladros' }));
-router.get('/:id', (req, res) => res.json({ message: 'Avance de Taladro por ID' }));
-router.post('/', (req, res) => res.json({ message: 'Crear Avance de Taladro' }));
-router.put('/:id', (req, res) => res.json({ message: 'Actualizar Avance de Taladro por su ID' }));
-router.delete('/:id', (req, res) => res.json({ message: 'Eliminar Avance de Taladro por su ID' }));
+router.get('/', getTaladroAvances);
+router.get('/:TaladroAvanceId', validarSchema(getTaladroAvanceSchema, 'params'), getTaladroAvance);
+router.post('/', validarSchema(createTaladroAvanceSchema, 'body'), createTaladroAvance);
+router.put('/:TaladroAvanceId', validarSchema(getTaladroAvanceSchema, 'params'), validarSchema(updateTaladroAvanceSchema, 'body'), updateTaladroAvance);
+router.delete('/:TaladroAvanceId', validarSchema(getTaladroAvanceSchema, 'params'), deleteTaladroAvance);
+
 
 export default router;

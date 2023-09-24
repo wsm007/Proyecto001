@@ -40,7 +40,6 @@ app.use(logErrors);
 app.use(errorHandler);
 
 
-
 // Exportar app
 export default app;
 

@@ -1,5 +1,4 @@
-import {Router} from 'express';
-// import Router from 'express-promise-router' // Evita que se tenga que capturar el error con try catch
+import Router from 'express-promise-router' // Evita que se tenga que capturar el error con try catch
 import {
   getTaladros,
   getTaladro,
