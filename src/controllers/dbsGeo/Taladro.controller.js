@@ -1,46 +1,46 @@
-import { sql, getConnection } from '../db.js';
+import { sql, getConnection } from '../../db.js';
 
 export const getTaladros = async (req, res) => {
-    // Conexion a la base de datos
-    const pool = await getConnection()
+  // Conexion a la base de datos
+  const pool = await getConnection()
 
-    // Ejecutar el procedimiento almacenado
-    const result = await pool.request()
-      .execute('dbsGeo.usp_Taladro_Read')
+  // Ejecutar el procedimiento almacenado
+  const result = await pool.request()
+    .execute('dbsGeo.usp_Taladro_Read')
 
-    res.status(200).json({
-      Registros: result.rowsAffected[0] ,
-      Mensaje: "Taladros obtenidos"
-    })
+  res.status(200).json({
+    Registros: result.rowsAffected[0] ,
+    Mensaje: "Taladros obtenidos"
+  })
 
-    // Cerrar la conexión a la base de datos
-    pool.close();
+  // Cerrar la conexión a la base de datos
+  pool.close();
 }
 
 export const getTaladro = async (req, res) => {
 
-    // Conexion a la base de datos
-    const pool = await getConnection()
+  // Conexion a la base de datos
+  const pool = await getConnection()
 
-    // Ejecutar el procedimiento almacenado
-    const result = await pool.request()
-      .input('TaladroId', sql.Int, req.params.TaladroId)
-      .execute('dbsGeo.usp_Taladro_ReadById')
+  // Ejecutar el procedimiento almacenado
+  const result = await pool.request()
+    .input('TaladroId', sql.Int, req.params.TaladroId)
+    .execute('dbsGeo.usp_Taladro_ReadById')
 
-    // Verificar si el Taladro existe
-    if (result.rowsAffected[0] == 0) {
-      res.status(404).json({
-          Mensaje: "Taladro no encontrada"
-      })
-    } else {
-      res.status(200).json({
-        Registros: result.rowsAffected[0],
-        Mensaje: "Taladro obtenido"
-      })
-    }
+  // Verificar si el Taladro existe
+  if (result.rowsAffected[0] == 0) {
+    res.status(404).json({
+        Mensaje: "Taladro no encontrada"
+    })
+  } else {
+    res.status(200).json({
+      Registros: result.rowsAffected[0],
+      Mensaje: "Taladro obtenido"
+    })
+  }
 
-    // Cerrar la conexión a la base de datos
-    pool.close();
+  // Cerrar la conexión a la base de datos
+  pool.close();
 }
 
 export const createTaladro = async (req, res, next) => {
@@ -65,7 +65,7 @@ export const createTaladro = async (req, res, next) => {
     res.status(200).json({
       Id: result.output.TaladroId,
       Registros: result.rowsAffected[0],
-      Message: "El Taladro se creó correctamente"
+      Mensaje: "El Taladro se creó correctamente"
     })
 
     // Cerrar la conexión a la base de datos
@@ -74,7 +74,7 @@ export const createTaladro = async (req, res, next) => {
   } catch (error) {
     if (error.number == 2601) {
         return res.status(409).json({
-            message: "El Taladro ya existe"
+          Mensaje: "El Taladro ya existe"
         })
     }
     next(error);
@@ -108,9 +108,9 @@ export const updateTaladro = async(req, res, next) => {
       })
     } else {
       res.status(200).json({
-          Id: result.output.TaladroId,
-          Registros: result.rowsAffected[0],
-          Message: "El Taladro se actualizó correctamente"
+        Id: result.output.TaladroId,
+        Registros: result.rowsAffected[0],
+        Mensaje: "El Taladro se actualizó correctamente"
       })
     }
 
@@ -120,7 +120,7 @@ export const updateTaladro = async(req, res, next) => {
   } catch (error) {
     if (error.number == 2601) {
       return res.status(409).json({
-          message: "El Taladro ya existe"
+        Mensaje: "El Taladro ya existe"
       })
     }
     next(error);
@@ -140,13 +140,13 @@ export const deleteTaladro = async (req, res) => {
   // Verificar si el Taladro existe
   if (result.rowsAffected[0] == 0) {
     res.status(404).json({
-        message: "Taladro no encontrado"
+      Mensaje: "Taladro no encontrado"
     })
   } else {
     res.status(200).json({
       Id: result.output.TaladroId,
       Registros: result.rowsAffected[0],
-      Message: "El Taladro se eliminó correctamente"
+      Mensaje: "El Taladro se eliminó correctamente"
     })
   }
 

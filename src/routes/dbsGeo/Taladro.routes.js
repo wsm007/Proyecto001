@@ -1,17 +1,7 @@
 import Router from 'express-promise-router' // Evita que se tenga que capturar el error con try catch
-import {
-  getTaladros,
-  getTaladro,
-  createTaladro,
-  updateTaladro,
-  deleteTaladro
-} from '../controllers/dbsGeo.Taladro.controller.js';
-import { validarSchema } from '../middlewares/validarSchema.handler.js';
-import {
-  getTaladroSchema,
-  createTaladroSchema,
-  updateTaladroSchema
-} from '../schemas/dbsGeo.Taladro.schema.js';
+import { getTaladros, getTaladro, createTaladro, updateTaladro, deleteTaladro } from '../../controllers/dbsGeo/Taladro.controller.js';
+import { getTaladroSchema, createTaladroSchema, updateTaladroSchema } from '../../schemas/dbsGeo/Taladro.schema.js';
+import { validarSchema } from '../../middlewares/validarSchema.handler.js';
 
 const router = Router();
 

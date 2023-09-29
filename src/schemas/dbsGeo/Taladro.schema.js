@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { messages } from './mensajesPersonalizadosJoi.js';
+import { messages } from '../mensajesPersonalizadosJoi.js';
 
 const TaladroId = Joi.number().integer().positive().required().messages(messages);
 const Codigo = Joi.string().max(30).required().messages(messages);

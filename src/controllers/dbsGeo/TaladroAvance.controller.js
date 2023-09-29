@@ -1,4 +1,4 @@
-import { sql, getConnection } from '../db.js';
+import { sql, getConnection } from '../../db.js';
 
 export const getTaladroAvances = async (req, res) => {
     // Conexion a la base de datos
@@ -69,7 +69,7 @@ export const createTaladroAvance = async (req, res, next) => {
       res.status(200).json({
         Id: result.output.TaladroAvanceId,
         Registros: result.rowsAffected[0],
-        Message: "El Avance se creó correctamente"
+        Mensaje: "El Avance se creó correctamente"
       })
 
       // Cerrar la conexión a la base de datos
@@ -78,7 +78,7 @@ export const createTaladroAvance = async (req, res, next) => {
     } catch (error) {
       if (error.number == 2601) {
           return res.status(409).json({
-              message: "El Avance ya existe"
+            Mensaje: "El Avance ya existe"
           })
       }
       next(error);
@@ -111,13 +111,13 @@ export const updateTaladroAvance = async(req, res, next) => {
     // Verificar si la TaladroAvance existe
     if (result.rowsAffected[0] == 0) {
       res.status(404).json({
-          Mensaje: "Avance no encontrado"
+        Mensaje: "Avance no encontrado"
       })
     } else {
       res.status(200).json({
-          Id: result.output.TaladroAvanceId,
-          Registros: result.rowsAffected[0],
-          Message: "El Avance se actualizó correctamente"
+        Id: result.output.TaladroAvanceId,
+        Registros: result.rowsAffected[0],
+        Mensaje: "El Avance se actualizó correctamente"
       })
     }
 
@@ -127,7 +127,7 @@ export const updateTaladroAvance = async(req, res, next) => {
   } catch (error) {
     if (error.number == 2601) {
       return res.status(409).json({
-          message: "El TaladroAvance ya existe"
+        Mensaje: "El TaladroAvance ya existe"
       })
     }
     next(error);
@@ -147,13 +147,13 @@ export const deleteTaladroAvance = async (req, res) => {
   // Verificar si el TaladroAvance existe
   if (result.rowsAffected[0] == 0) {
     res.status(404).json({
-        message: "Avance no encontrado"
+      Mensaje: "Avance no encontrado"
     })
   } else {
     res.status(200).json({
       Id: result.output.TaladroAvanceId,
       Registros: result.rowsAffected[0],
-      Message: "El Avance se eliminó correctamente"
+      Mensaje: "El Avance se eliminó correctamente"
     })
   }
 

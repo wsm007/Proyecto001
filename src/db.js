@@ -1,5 +1,5 @@
 import sql from 'mssql';
-import {varEntorno} from './config/config.js';
+import { varEntorno } from './config/config.js';
 
 // Validar como conectar cuando sea a través de la web
 // const USER = encodeURIComponent(varEntorno.dbUser);
